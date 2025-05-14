@@ -2,7 +2,7 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dz-vadym.github.io/moneycyberclicker",
+  "homepage": "https://dz-vadim.github.io/moneycyberclicker",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
