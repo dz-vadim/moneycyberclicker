@@ -2,13 +2,10 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# 1) Копіюємо лише package*.json для швидкого npm ci
 COPY package.json package-lock.json ./
+# Примусово ігноруємо peer-deps конфлікти
+RUN npm ci --legacy-peer-deps
 
-# 2) Встановлюємо залежності (включно з dev)
-RUN npm ci
-
-# 3) Копіюємо весь код і будуємо Next.js
 COPY . .
 RUN npm run build
 
@@ -16,16 +13,11 @@ RUN npm run build
 FROM node:18-alpine AS runner
 WORKDIR /app
 
-# 1) Копіюємо лише production-залежності
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
-# 2) Копіюємо результат збірки та статичні файли
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-# 3) Експортуємо порт
 EXPOSE 3000
-
-# 4) Стартуємо сервер
-CMD ["npm", "run", "start"] 
+CMD ["npm","run","start"]
