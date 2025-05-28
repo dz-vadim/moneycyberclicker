@@ -6,12 +6,11 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  output: 'export',
+  assetPrefix: './',
   images: {
     unoptimized: true,
   },
-  output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/moneycyberclicker' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/moneycyberclicker/' : '',
 }
 
 export default nextConfig
